@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
   socket.on('userCount', (count) => {
     userCount.textContent = count;
   });
+  
 
   // Canvas event handlers
   // TODO: Add event listeners for mouse events (mousedown, mousemove, mouseup, mouseout)
@@ -61,13 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
   canvas.addEventListener('mousemove', draw);
   canvas.addEventListener('mouseup', stopDrawing);
   canvas.addEventListener('mouseout', stopDrawing);
-
-  // Touch support (optional)
-  // TODO: Add event listeners for touch events (touchstart, touchmove, touchend, touchcancel)
-  canvas.addEventListener('touchstart', handleTouchStart);
-  canvas.addEventListener('touchmove', handleTouchMove);
-  canvas.addEventListener('touchend', stopDrawing);
-  canvas.addEventListener('touchcancel', stopDrawing);
 
   // Clear button event handler
   // TODO: Add event listener for the clear button
@@ -143,35 +137,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Helper function to get coordinates from mouse or touch event
   function getCoordinates(e) {
-    if (e.type.includes('touch')) {// Get first touch point
-      const touch = e.touches[0] || e.changedTouches[0];
-      // Get canvas position
-      const rect = canvas.getBoundingClientRect();
-      // Calculate coordinates relative to canvas
-      return {
-        x: touch.clientX - rect.left,
-        y: touch.clientY - rect.top
-      };
-    } else {// Mouse event
+    
       return {
         x: e.offsetX,
         y: e.offsetY
       };
-    }
+    
   }
 
-  // Handle touch events
-  function handleTouchStart(e) {
-    // Prevent scrolling
-    const coords = getCoordinates(e);
-    isDrawing = true;
-    lastX = coords.x;
-    lastY = coords.y;
-  }
 
-  function handleTouchMove(e) {
-    // TODO: Prevent default behavior and call draw
-    e.preventDefault();
-    draw(e);
-  }
 });
